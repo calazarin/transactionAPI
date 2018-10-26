@@ -6,12 +6,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -77,50 +73,10 @@ public class TransactionManagerServiceImpl implements TransactionManagerService 
 								DoubleSummaryStatistics::combine);
 				
 				
-			//			.map(transactionVO -> transactionVO.getAmount());
-					/*	.collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, 
-								DoubleSummaryStatistics::combine);*/
-				
-					/*	.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.map(transactionVO -> transactionVO.getAmount())*/
-						
-						
-				/*		
-						collect(DoubleSummaryStatistics::new, DoubleSummaryStatistics::accept, 
-								DoubleSummaryStatistics::combine);*/
-				
-
-			/*	BigDecimal sum = transactionList.stream()
-						.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.map(transactionVO -> transactionVO.getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-				statisticVO.setSum(sum.setScale(2, BigDecimal.ROUND_HALF_UP));
-
-				Optional<TransactionVO> max = transactionList.stream()
-						.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.max(Comparator.comparing(TransactionVO::getAmount));
-
-				Optional<TransactionVO> min = transactionList.stream()
-						.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.min(Comparator.comparing(TransactionVO::getAmount));
-
-				OptionalDouble average = transactionList.stream()
-						.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.map(transactionVO -> transactionVO.getAmount()).mapToDouble(BigDecimal::doubleValue).average();
-
-				long count = transactionList.stream()
-						.filter(transactionVO -> this.verifyIfTransactionIsNotTooOld(transactionVO))
-						.collect(Collectors.counting());
-*/
-				//statisticVO.setAvg(average.isPresent() ? new BigDecimal(averageValue).setScale(2, BigDecimal.ROUND_HALF_UP) : new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP));
 				statisticVO.setAvg(new BigDecimal(statistics.getAverage()).setScale(2, BigDecimal.ROUND_HALF_UP));
-			//	statisticVO.setMax(max.isPresent() ? max.get().getAmount().setScale(2, BigDecimal.ROUND_HALF_UP) : new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP));
 				statisticVO.setMax(new BigDecimal(statistics.getMax()).setScale(2, BigDecimal.ROUND_HALF_UP));
-				//statisticVO.setMin(min.isPresent() ? min.get().getAmount().setScale(2, BigDecimal.ROUND_HALF_UP) : new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_UP));
 				statisticVO.setMin(new BigDecimal(statistics.getMin()).setScale(2, BigDecimal.ROUND_HALF_UP));
-				//statisticVO.setCount(count);
 				statisticVO.setCount(statistics.getCount());
-				//statisticVO.setSum(sum.setScale(2, BigDecimal.ROUND_HALF_UP));
 				statisticVO.setSum(new BigDecimal(statistics.getSum()).setScale(2, BigDecimal.ROUND_HALF_UP));
 
 			}
